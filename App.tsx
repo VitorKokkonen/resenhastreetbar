@@ -1,28 +1,16 @@
-import * as React from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './src/components/HomeScreen';
+import { View } from 'react-native';
+import AppRoutes from './src/routes/approutes';
 
-const Stack = createNativeStackNavigator();
-
-function App() {
+const App = () => {
+  
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            title: 'Cardápio',
-            headerStyle: {
-              backgroundColor: 'yellow',
-            },
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+    <View style={{ flex: 1 }}>
+      <AppRoutes />
+    </View>
+  )
 
-export default App;
+}
+export default App
