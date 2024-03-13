@@ -9,20 +9,16 @@ const { Navigator, Screen } = createBottomTabNavigator();
 const AppRoutes = () => {
     return (
         <NavigationContainer>
-            <Navigator
-                screenOptions={{
-                    
-                }}
-            >
+            <Navigator>
                 <Screen
                     name='Cardápio'
                     component={Home}
                     options={{
                         headerStyle: {
                             backgroundColor: 'yellow',
-                            height: 100,
-                            borderBottomLeftRadius: 22,
-                            borderBottomRightRadius: 22,
+                            height: 140,
+                            borderBottomLeftRadius: 28,
+                            borderBottomRightRadius: 28,
                         }
                     }}
                 />
@@ -32,7 +28,7 @@ const AppRoutes = () => {
                     options={{
                         headerStyle: {
                             backgroundColor: 'yellow',
-                            height: 100,
+                            height: 140,
                             borderBottomLeftRadius: 22,
                             borderBottomRightRadius: 22
                         }
