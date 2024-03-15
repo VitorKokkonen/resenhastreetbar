@@ -1,36 +1,31 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
+import DrinkCard from "../components/DrinkCard";
+
+const caipaImage = require('./../../assets/caipa.png');
 
 const Home = () => {
     return (
-        <View>
-            <View style={styles.drinkContainer}>
-                <Image
-                    style={[styles.image, styles.shadowProp]}
-                    source={require('./../../assets/caipa.png')}
-                />
-                <Text style={[styles.shadowProp]}>Caipa</Text>
-            </View>
+        <View style={styles.rowContainer}>
+            <DrinkCard
+                nome="Caipa"
+                image={caipaImage}
+            />
+
+            <DrinkCard
+                nome="Caipa"
+                image={caipaImage}
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    drinkContainer: {
-        width: '30%',
-        alignItems: 'center',
+    rowContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        
     },
-    image: {
-        width: 100,
-        height: 150,
-    },
-    shadowProp: {
-        shadowColor: '#171717',
-        shadowOffset: { width: -2, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        elevation: 3, 
-    },
-});
+})
 
 export default Home;

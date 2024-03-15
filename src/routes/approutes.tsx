@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/home';
 import Wallet from '../pages/wallet';
 import { NavigationContainer } from '@react-navigation/native';
+import { Image } from 'react-native';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -15,27 +16,40 @@ const AppRoutes = () => {
                     component={Home}
                     options={{
                         headerStyle: {
-                            backgroundColor: 'yellow',
+                            backgroundColor: '#F6CE21',
                             height: 140,
                             borderBottomLeftRadius: 28,
                             borderBottomRightRadius: 28,
-                        }
+                        },
+                        headerLeft: () => (
+                            <Image
+                                source={require('./../../assets/resenha.png')}
+                                style={{ width: 80, height: 80, marginLeft: 10, backgroundColor: 'white' }}
+                            />
+                        ),
                     }}
                 />
                 <Screen
                     name='Carteira'
                     component={Wallet}
-                    options={{
+                    options={({ navigation }) => ({
                         headerStyle: {
-                            backgroundColor: 'yellow',
+                            backgroundColor: '#F6CE21',
                             height: 140,
                             borderBottomLeftRadius: 22,
                             borderBottomRightRadius: 22
-                        }
-                    }}
+                        },
+                        headerLeft: () => (
+                            <Image
+                                source={require('./../../assets/resenha.png')}
+                                style={{ width: 80, height: 80, marginLeft: 10, backgroundColor: 'white' }}
+                            />
+                        ),
+                    })}
                 />
             </Navigator>
         </NavigationContainer>
     )
 }
-export default AppRoutes
+
+export default AppRoutes;
