@@ -16,6 +16,7 @@ const ModalDrink = ({ modalVisible, closeModal }: any) => {
                         source={require('../../../assets/caipa.png')}
                         style={styles.modalImage}
                     />
+                    <Button title="Adicionar a Carteira" onPress={closeModal} />
                     <Button title="Close Modal" onPress={closeModal} />
                 </View>
             </View>
@@ -31,21 +32,8 @@ const styles = StyleSheet.create({
         marginTop: 22,
     },
     modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 20,
-        width: '80%',
-        maxHeight: '80%',
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
+       height: "100%",
+       alignItems: 'center'
     },
     modalImage: {
         width: 120,
