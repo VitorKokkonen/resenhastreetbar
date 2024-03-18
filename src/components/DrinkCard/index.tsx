@@ -13,8 +13,6 @@ const DrinkCard = (props: any) => {
         setModalVisible(false);
     };
 
-    
-
     return (
         <View>
             <TouchableOpacity onPress={handleCardPress}>
@@ -38,8 +36,8 @@ const styles = StyleSheet.create({
         margin: 30,
         padding: 10,
         alignItems: 'center',
-        backgroundColor: '#fff', // Adicionando um backgroundColor
-        borderRadius: 10, // Ajustando o borderRadius para a sombra aparecer melhor
+        backgroundColor: '#fff',
+        borderRadius: 10, 
     },
     image: {
         width: 100,
