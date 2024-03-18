@@ -1,12 +1,14 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from '../pages/home';
-import Wallet from '../pages/wallet';
-import { NavigationContainer } from '@react-navigation/native';
 import { Image } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMartiniGlass } from '@fortawesome/free-solid-svg-icons';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import {
+    createBottomTabNavigator,
+    NavigationContainer,
+    Home,
+    Wallet,
+    FontAwesomeIcon,
+    faMartiniGlass,
+    faWallet
+} from '../../index';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -18,7 +20,7 @@ const AppRoutes = () => {
                     name='Cardápio'
                     component={Home}
                     options={{
-                        tabBarIcon: ({ color, size }) => (
+                        tabBarIcon: ({ color }) => (
                             <FontAwesomeIcon icon={faMartiniGlass} color={color} size={18} />
                         ),
                         tabBarActiveTintColor: '#F6CE21',
@@ -40,7 +42,7 @@ const AppRoutes = () => {
                     name='Carteira'
                     component={Wallet}
                     options={() => ({
-                        tabBarIcon: ({ color, size }) => (
+                        tabBarIcon: ({ color }) => (
                             <FontAwesomeIcon icon={faWallet} color={color} size={18} />
                         ),
                         tabBarBadge: 3,
