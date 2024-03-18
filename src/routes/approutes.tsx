@@ -32,7 +32,7 @@ const AppRoutes = () => {
                 <Screen
                     name='Carteira'
                     component={Wallet}
-                    options={({ navigation }) => ({
+                    options={() => ({
                         headerStyle: {
                             backgroundColor: '#F6CE21',
                             height: 140,
