@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import DrinkCard from "../components/DrinkCard";
 
 const caipaImage = require('./../../assets/caipa.png');
@@ -11,7 +11,6 @@ const Home = () => {
                 nome="Caipa"
                 image={caipaImage}
             />
-
             <DrinkCard
                 nome="Caipa"
                 image={caipaImage}
@@ -24,8 +23,7 @@ const styles = StyleSheet.create({
     rowContainer: {
         flex: 1,
         flexDirection: 'row',
-        
     },
-})
+});
 
 export default Home;
