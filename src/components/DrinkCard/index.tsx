@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, Modal, Button } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import ModalDrink from "../Modal";
-const DrinkCard = (props: any) => {
-    const { nome, image } = props;
+
+interface DrinkCardProps {
+    nome: string;
+    image: any; // ajuste o tipo conforme necessário
+    preco: number;
+    onAddToWallet: (drink: string, quantity: number, preco: number) => void;
+}
+
+const DrinkCard: React.FC<DrinkCardProps> = ({ nome, image, preco, onAddToWallet }) => {
     const [modalVisible, setModalVisible] = useState(false);
 
     const handleCardPress = () => {
@@ -11,6 +18,11 @@ const DrinkCard = (props: any) => {
 
     const closeModal = () => {
         setModalVisible(false);
+    };
+
+    const addToWallet = (drink: string, quantity: number, preco: number) => {
+        onAddToWallet(drink, quantity, preco);
+        closeModal(); // fechar o modal após adicionar à carteira
     };
 
     return (
@@ -22,14 +34,18 @@ const DrinkCard = (props: any) => {
                         source={image}
                     />
                     <Text style={[styles.shadowProp]}>{nome}</Text>
+                    <Text style={[styles.shadowProp]}>R$ {preco.toFixed(2)}</Text>
                 </View>
             </TouchableOpacity>
-            <ModalDrink modalVisible={modalVisible} closeModal={closeModal} />
+            <ModalDrink 
+                modalVisible={modalVisible} 
+                closeModal={closeModal} 
+                addToWallet={addToWallet} 
+                preco={preco} 
+            />
         </View>
     );
 }
-
-export default DrinkCard
 
 const styles = StyleSheet.create({
     drinkContainer: {
@@ -37,7 +53,7 @@ const styles = StyleSheet.create({
         padding: 10,
         alignItems: 'center',
         backgroundColor: '#fff',
-        borderRadius: 10, 
+        borderRadius: 10,
     },
     image: {
         width: 100,
@@ -51,25 +67,6 @@ const styles = StyleSheet.create({
         shadowRadius: 3.9,
         elevation: 5,
     },
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 22
-    },
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5
-    },
 });
+
+export default DrinkCard;

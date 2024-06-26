@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import { Modal, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
 
-const ModalDrink = ({ modalVisible, closeModal }) => {
+interface ModalDrinkProps {
+    modalVisible: boolean;
+    closeModal: () => void;
+    addToWallet: (drink: string, quantity: number, preco: number) => void;
+    preco: number;
+}
+
+const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addToWallet, preco }) => {
     const [quantity, setQuantity] = useState(1);
     const [selectedOption, setSelectedOption] = useState('Cachaça');
 
@@ -15,8 +22,12 @@ const ModalDrink = ({ modalVisible, closeModal }) => {
         }
     };
 
-    const selectOption = (option) => {
+    const selectOption = (option: string) => {
         setSelectedOption(option);
+    };
+
+    const handleAddToWallet = () => {
+        addToWallet(selectedOption, quantity, preco);
     };
 
     return (
@@ -55,11 +66,12 @@ const ModalDrink = ({ modalVisible, closeModal }) => {
                             <Text style={styles.buttonText}>+</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.addButton} onPress={closeModal}>
-                        <Text style={styles.addButtonText}>Adicionar a Carteira</Text>
+                    <Text style={styles.priceText}>Preço: R${preco.toFixed(2)}</Text>
+                    <TouchableOpacity style={styles.addButton} onPress={handleAddToWallet}>
+                        <Text style={styles.addButtonText}>Adicionar à Carteira</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-                        <Text style={styles.closeButtonText}>Close Modal</Text>
+                        <Text style={styles.closeButtonText}>Fechar Modal</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -129,6 +141,11 @@ const styles = StyleSheet.create({
     quantityText: {
         fontSize: 18,
         marginHorizontal: 20,
+    },
+    priceText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginVertical: 10,
     },
     addButton: {
         backgroundColor: "#2196F3",
