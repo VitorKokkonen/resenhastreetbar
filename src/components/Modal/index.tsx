@@ -1,16 +1,26 @@
-import React, { useState } from "react";
-import { Modal, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Modal, StyleSheet, View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 
 interface ModalDrinkProps {
     modalVisible: boolean;
     closeModal: () => void;
     addToWallet: (drink: string, quantity: number, preco: number) => void;
     preco: number;
+    onSavePrice: (newPreco: number) => void; // Adiciona esta linha
 }
 
-const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addToWallet, preco }) => {
+const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addToWallet, preco, onSavePrice }) => {
     const [quantity, setQuantity] = useState(1);
     const [selectedOption, setSelectedOption] = useState('Cachaça');
+    const [editablePreco, setEditablePreco] = useState(preco.toFixed(2));
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        if (modalVisible) {
+            setQuantity(1);
+            setEditablePreco(preco.toFixed(2));
+        }
+    }, [modalVisible, preco]);
 
     const incrementQuantity = () => {
         setQuantity(quantity + 1);
@@ -27,7 +37,18 @@ const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addTo
     };
 
     const handleAddToWallet = () => {
-        addToWallet(selectedOption, quantity, preco);
+        addToWallet(selectedOption, quantity, parseFloat(editablePreco));
+    };
+
+    const handleEditPreco = () => {
+        if (isEditing) {
+            onSavePrice(parseFloat(editablePreco)); // Salva o preço editado
+        }
+        setIsEditing(!isEditing);
+    };
+
+    const handlePrecoChange = (text: string) => {
+        setEditablePreco(text);
     };
 
     return (
@@ -66,7 +87,19 @@ const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addTo
                             <Text style={styles.buttonText}>+</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.priceText}>Preço: R${preco.toFixed(2)}</Text>
+                    {isEditing ? (
+                        <TextInput
+                            style={styles.priceInput}
+                            value={editablePreco}
+                            onChangeText={handlePrecoChange}
+                            keyboardType="numeric"
+                        />
+                    ) : (
+                        <Text style={styles.priceText}>Preço: R${editablePreco}</Text>
+                    )}
+                    <TouchableOpacity style={styles.editButton} onPress={handleEditPreco}>
+                        <Text style={styles.editButtonText}>{isEditing ? "Salvar" : "Editar Preço"}</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.addButton} onPress={handleAddToWallet}>
                         <Text style={styles.addButtonText}>Adicionar à Carteira</Text>
                     </TouchableOpacity>
@@ -147,6 +180,17 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginVertical: 10,
     },
+    priceInput: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginVertical: 10,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 5,
+        padding: 5,
+        width: 100,
+        textAlign: "center",
+    },
     addButton: {
         backgroundColor: "#2196F3",
         padding: 10,
@@ -165,7 +209,17 @@ const styles = StyleSheet.create({
     closeButtonText: {
         color: "black",
         fontWeight: "bold",
-    }
+    },
+    editButton: {
+        backgroundColor: "#4CAF50", // Cor esverdeada
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+    },
+    editButtonText: {
+        color: "white",
+        fontWeight: "bold",
+    },
 });
 
 export default ModalDrink;

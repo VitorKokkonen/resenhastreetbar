@@ -11,6 +11,7 @@ interface DrinkCardProps {
 
 const DrinkCard: React.FC<DrinkCardProps> = ({ nome, image, preco, onAddToWallet }) => {
     const [modalVisible, setModalVisible] = useState(false);
+    const [currentPreco, setCurrentPreco] = useState(preco);
 
     const handleCardPress = () => {
         setModalVisible(true);
@@ -22,7 +23,11 @@ const DrinkCard: React.FC<DrinkCardProps> = ({ nome, image, preco, onAddToWallet
 
     const addToWallet = (drink: string, quantity: number, preco: number) => {
         onAddToWallet(drink, quantity, preco);
-        closeModal(); // fechar o modal após adicionar à carteira
+        closeModal(); 
+    };
+
+    const saveNewPrice = (newPreco: number) => {
+        setCurrentPreco(newPreco);
     };
 
     return (
@@ -34,14 +39,15 @@ const DrinkCard: React.FC<DrinkCardProps> = ({ nome, image, preco, onAddToWallet
                         source={image}
                     />
                     <Text style={[styles.shadowProp]}>{nome}</Text>
-                    <Text style={[styles.shadowProp]}>R$ {preco.toFixed(2)}</Text>
+                    <Text style={[styles.shadowProp]}>R$ {currentPreco.toFixed(2)}</Text>
                 </View>
             </TouchableOpacity>
             <ModalDrink 
                 modalVisible={modalVisible} 
                 closeModal={closeModal} 
                 addToWallet={addToWallet} 
-                preco={preco} 
+                preco={currentPreco} 
+                onSavePrice={saveNewPrice}
             />
         </View>
     );
