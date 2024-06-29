@@ -6,13 +6,22 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 interface WalletProps {
   items: Array<{ drink: string; quantity: number; preco: number }>;
   onRemoveItem: (index: number) => void;
+  onClearItems: () => void;
 }
 
-const Wallet: React.FC<WalletProps> = ({ items, onRemoveItem }) => {
+const Wallet: React.FC<WalletProps> = ({ items, onRemoveItem, onClearItems }) => {
   const totalAmount = items.reduce(
     (total, item) => total + item.quantity * item.preco,
     0
   );
+
+  const handleCloseBox = () => {
+    const saleDate = new Date().toISOString();
+    console.log("Itens vendidos:", items);
+    console.log("Data da venda:", saleDate);
+    // Aqui você pode adicionar a lógica para enviar os itens ao banco de dados ou tela "Itens Vendidos"
+    onClearItems(); // Limpar a carteira após enviar os itens
+  };
 
   return (
     <View style={styles.container}>
@@ -33,7 +42,7 @@ const Wallet: React.FC<WalletProps> = ({ items, onRemoveItem }) => {
       ))}
       <View style={styles.totalContainer}>
         <Text style={styles.totalText}>Total: R${totalAmount.toFixed(2)}</Text>
-        <TouchableOpacity style={styles.closeButton}>
+        <TouchableOpacity style={styles.closeButton} onPress={handleCloseBox}>
           <Text style={styles.closeButtonText}>Fechar Caixa</Text>
         </TouchableOpacity>
       </View>

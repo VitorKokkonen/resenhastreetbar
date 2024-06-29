@@ -6,10 +6,12 @@ interface ModalDrinkProps {
     closeModal: () => void;
     addToWallet: (drink: string, quantity: number, preco: number) => void;
     preco: number;
-    onSavePrice: (newPreco: number) => void; // Adiciona esta linha
+    onSavePrice: (newPreco: number) => void;
+    image: any; // Tipo da imagem
+    drinkName: string; // Nome da bebida
 }
 
-const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addToWallet, preco, onSavePrice }) => {
+const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addToWallet, preco, onSavePrice, image, drinkName }) => {
     const [quantity, setQuantity] = useState(1);
     const [selectedOption, setSelectedOption] = useState('Cachaça');
     const [editablePreco, setEditablePreco] = useState(preco.toFixed(2));
@@ -19,6 +21,7 @@ const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addTo
         if (modalVisible) {
             setQuantity(1);
             setEditablePreco(preco.toFixed(2));
+            setSelectedOption('Cachaça'); // Reseta a opção selecionada para Cachaça ao abrir o modal
         }
     }, [modalVisible, preco]);
 
@@ -61,23 +64,25 @@ const ModalDrink: React.FC<ModalDrinkProps> = ({ modalVisible, closeModal, addTo
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Image
-                        source={require('../../../assets/caipa.png')}
+                        source={image} // Utiliza a imagem recebida via props
                         style={styles.modalImage}
                     />
-                    <View style={styles.optionContainer}>
-                        <TouchableOpacity
-                            style={[styles.optionButton, selectedOption === 'Cachaça' && styles.selectedOption]}
-                            onPress={() => selectOption('Cachaça')}
-                        >
-                            <Text style={styles.optionText}>Cachaça</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={[styles.optionButton, selectedOption === 'Vodka' && styles.selectedOption]}
-                            onPress={() => selectOption('Vodka')}
-                        >
-                            <Text style={styles.optionText}>Vodka</Text>
-                        </TouchableOpacity>
-                    </View>
+                    { (drinkName === 'Caipa' || drinkName === 'Caipa de Vinho') &&
+                        <View style={styles.optionContainer}>
+                            <TouchableOpacity
+                                style={[styles.optionButton, selectedOption === 'Cachaça' && styles.selectedOption]}
+                                onPress={() => selectOption('Cachaça')}
+                            >
+                                <Text style={styles.optionText}>Cachaça</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.optionButton, selectedOption === 'Vodka' && styles.selectedOption]}
+                                onPress={() => selectOption('Vodka')}
+                            >
+                                <Text style={styles.optionText}>Vodka</Text>
+                            </TouchableOpacity>
+                        </View>
+                    }
                     <View style={styles.quantityContainer}>
                         <TouchableOpacity style={styles.button} onPress={decrementQuantity}>
                             <Text style={styles.buttonText}>-</Text>

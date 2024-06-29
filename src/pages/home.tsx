@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import DrinkCard from "../components/DrinkCard";
-// import { fetchCardapio } from "../services/produtosServices";
+import { fetchCardapio } from "../services/produtosServices";
 
 const caipaImage = require('./../../assets/caipa.png');
 const whiskyImage = require('./../../assets/whisky.png');
@@ -13,18 +13,17 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ onAddToWallet }) => {
   const [cardapio, setCardapio] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const produtosData = await fetchCardapio()
-  //       setCardapio(produtosData)
-
-  //     } catch (error) {
-  //       console.error("Erro ao uscar os produtos", error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const produtosData = await fetchCardapio();
+        setCardapio(produtosData);
+      } catch (error) {
+        console.error("Erro ao buscar os produtos", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <View style={styles.container}>

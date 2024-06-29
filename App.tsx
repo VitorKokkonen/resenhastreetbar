@@ -9,9 +9,13 @@ const App = () => {
     setWalletItems([...walletItems, { drink, quantity, preco }]);
   };
 
+  const handleClearItems = () => {
+    setWalletItems([]);
+  };
+
   return (
     <View style={{ flex: 1 }}>
-      <AppRoutes walletItems={walletItems} onAddToWallet={handleAddToWallet} />
+      <AppRoutes walletItems={walletItems} onAddToWallet={handleAddToWallet} onClearItems={handleClearItems} />
     </View>
   )
 }

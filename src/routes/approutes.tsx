@@ -9,26 +9,21 @@ import { faMartiniGlass, faWallet } from "@fortawesome/free-solid-svg-icons";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
-interface AppRoutesProps {
-  walletItems: Array<{ drink: string; quantity: number; preco: number }>;
-  onAddToWallet: (drink: string, quantity: number, preco: number) => void;
-}
-
-const AppRoutes: React.FC<AppRoutesProps> = ({
-  walletItems,
-  onAddToWallet,
-}) => {
-  const [items, setItems] = useState(walletItems);
+const AppRoutes = () => {
+  const [items, setItems] = useState<Array<{ drink: string; quantity: number; preco: number }>>([]);
 
   const handleAddToWallet = (drink: string, quantity: number, preco: number) => {
     const newItem = { drink, quantity, preco };
     setItems([...items, newItem]);
-    onAddToWallet(drink, quantity, preco);
   };
 
   const handleRemoveItem = (index: number) => {
     const updatedItems = items.filter((_, i) => i !== index);
     setItems(updatedItems);
+  };
+
+  const handleClearItems = () => {
+    setItems([]);
   };
 
   return (
@@ -38,11 +33,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
           name="Cardápio"
           options={{
             tabBarIcon: ({ color }) => (
-              <FontAwesomeIcon
-                icon={faMartiniGlass}
-                color={color}
-                size={18}
-              />
+              <FontAwesomeIcon icon={faMartiniGlass} color={color} size={18} />
             ),
             tabBarActiveTintColor: "#F6CE21",
             headerStyle: {
@@ -98,6 +89,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
               {...props}
               items={items}
               onRemoveItem={handleRemoveItem}
+              onClearItems={handleClearItems} // Passando a função handleClearItems
             />
           )}
         </Screen>
